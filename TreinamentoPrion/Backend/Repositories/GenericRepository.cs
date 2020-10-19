@@ -16,16 +16,32 @@ namespace Backend.Repositories
             context = new GenericContext();
         }
 
-        public void Add(T entity)
+        public virtual void Add(T entity)
         {
             context.Set<T>().Add(entity);
             context.SaveChanges();
         }
 
-        public void Update(T entity)
+        public virtual void Update(T entity)
         {
             context.Entry(entity).State = System.Data.Entity.EntityState.Modified;
             context.SaveChanges();
+        }
+
+        public virtual void Delete(T entity)
+        {
+            context.Set<T>().Remove(entity);
+            context.SaveChanges();
+        }
+
+        public virtual T Find(int id)
+        {
+            return context.Set<T>().Find(id);
+        }
+
+        public virtual List<T> ListAll()
+        {
+            return context.Set<T>().ToList();
         }
 
         public void Dispose()
